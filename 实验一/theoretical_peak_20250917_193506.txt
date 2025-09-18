@@ -1,0 +1,11 @@
+系统理论峰值分析报告
+生成时间: Wed Sep 17 19:35:06 CST 2025
+
+CPU信息:
+  型号: AMD Ryzen 7 8745H with Radeon 780M Graphics
+  核心数: 16
+  频率: 3.792GHz
+  指令集: AVX512 + FMA
+
+理论峰值: 1941.504 GFLOPS
+

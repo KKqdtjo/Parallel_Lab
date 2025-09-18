@@ -13,12 +13,10 @@ double timestamp(){
   return tv.tv_sec + 1e-6*tv.tv_usec;
 }
 
-// 方案A：一维数组分配函数
 float* allocate1D(int size) {
     return (float*)malloc(size * sizeof(float));
 }
 
-// 方案A：一维数组释放函数
 void free1D(float *array) {
     if (array) free(array);
 }
@@ -55,7 +53,8 @@ int main(int argc, char *argv[]){
     }
   }
   
-  // 打印系统和实验信息
+  // 打印版本信息
+  printf("=== 版本4：一维数组优化版本（堆分配） ===\n");
   printf("矩阵规模: %d x %d\n", N, N);
   printf("内存占用: %.2f MB\n", 3.0 * N * N * sizeof(float) / (1024.0 * 1024.0));
   printf("最大线程数: %d\n", omp_get_max_threads());
@@ -97,7 +96,6 @@ int main(int argc, char *argv[]){
     }
   }
 
-
   for(int j=0; j<N; j++){
     for(int i=0; i<N; i++){
       C(i,j,N) = 0;
@@ -106,16 +104,13 @@ int main(int argc, char *argv[]){
 
   double time1=timestamp();
   for(int numOfTimes=0; numOfTimes<ITERATIONS; numOfTimes++){
-
     yourFunction(a, b, A, B, C, N);
-
   }
   double time2=timestamp();
 
   double time = (time2-time1)/ITERATIONS;
   // 使用long long避免整数溢出
   long long flops = 2LL*N*N + 2LL*N*N*N + 2LL*N*N;
-  //long long flops = 2LL*N*N + 2LL*N*N*N + (long long)N*N*N;
   double gflopsPerSecond = (double)flops/(1000000000.0)/time;
   
   // 输出性能结果
